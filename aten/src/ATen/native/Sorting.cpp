@@ -682,7 +682,7 @@ Tensor nanmedian_cpu(const Tensor& self) {
   return median_impl(self, /*ignore_nan=*/true);
 }
 
-std::tuple<Tensor&, Tensor&> sort_out_cpu(
+std::tuple<Tensor&, Tensor&> sort_out(
     Tensor& values,
     Tensor& indices,
     const Tensor& self,
@@ -697,18 +697,18 @@ std::tuple<Tensor&, Tensor&> sort_out_cpu(
     return std::forward_as_tuple(values, indices);
   }
 
-  sort_stub(kCPU, values, indices, dim, descending);
+  sort_stub(values.device().type(), values, indices, dim, descending);
 
   return std::forward_as_tuple(values, indices);
 }
 
-std::tuple<Tensor, Tensor> sort_cpu(
+std::tuple<Tensor, Tensor> sort(
     const Tensor& self,
     int64_t dim,
     bool descending) {
   Tensor values = at::empty({0}, self.options());
   Tensor indices = at::empty({0}, self.options().dtype(kLong));
-  return sort_out_cpu(values, indices, self, dim, descending);
+  return at::sort_out(values, indices, self, dim, descending);
 }
 
 Tensor& msort_out(Tensor& values, const Tensor& self) {

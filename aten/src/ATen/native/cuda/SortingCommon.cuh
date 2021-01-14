@@ -99,6 +99,8 @@ __global__ void fillSliceWithIndex_kernel(
   }
 }
 
+void Long_fillSliceWithIndex(Tensor& out, int64_t dim);
+
 // For slice sorting in Thrust; extracts a slice index from a linear
 // index and uses that for comparison
 struct SliceComp {

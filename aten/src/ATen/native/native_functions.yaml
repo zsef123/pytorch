@@ -6312,14 +6312,12 @@
 - func: sort.values(Tensor self, int dim=-1, bool descending=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
   use_c10_dispatcher: hacky_wrapper_for_legacy_signatures
   dispatch:
-    CPU: sort_out_cpu
-    CUDA: legacy::cuda::_th_sort_out
+    CPU, CUDA: sort_out
 
 - func: sort(Tensor self, int dim=-1, bool descending=False) -> (Tensor values, Tensor indices)
   variants: method, function
   dispatch:
-    CPU: sort_cpu
-    CUDA: legacy::cuda::_th_sort
+    CPU, CUDA: sort
     QuantizedCPU: sort_quantized_cpu
 
 - func: sort.dimname_values(Tensor self, Dimname dim, bool descending=False, *, Tensor(a!) values, Tensor(b!) indices) -> (Tensor(a!) values, Tensor(b!) indices)
